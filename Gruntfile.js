@@ -5,11 +5,10 @@ module.exports = function (grunt) {
         typescript: {
             base: {
                 src: ['server/**/*.ts'],
-                dest: 'server/js/',
+                dest: '.',
                 options: {
                     module: 'commonjs', //or amd
                     target: 'es5', //or es3
-                    base_path: 'server',
                     sourcemap: true,
                     fullSourceMapPath: true,
                     declaration: true
