@@ -19,13 +19,10 @@ module.exports = function (grunt) {
             all: ['tests/index.html']
         },
         uglify: {
-            options: {
-                banner: '/* typescript-app-template <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>) */\n'
-            },
             all: {
-                files: [
-                  { expand: true, cwd: 'server/js/', src: ['**/*.js'], dest: 'server/js/', ext: '.min.js' }
-                ]
+                files: {
+                    'server/public/js/main.min.js': ['server/public/js/app/**/*.js']
+                }
             }
         },
         htmlmin: {
@@ -84,5 +81,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
 
     //Tasks.
-    grunt.registerTask('default', ['typescript', 'qunit', 'uglify', 'htmlmin', 'copy']);
+    grunt.registerTask('default', ['typescript', 'qunit', 'uglify', 'htmlmin']);
+    grunt.registerTask('dev', ['typescript', 'qunit', 'uglify']);
 };
