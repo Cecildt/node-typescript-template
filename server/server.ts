@@ -1,43 +1,50 @@
-/// <reference path="../typings/express.d.ts" />
-/// <reference path="../typings/node.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/server.d.ts" />
 
-import http = require("http");
-import url = require("url");
-import routes = require("./routes/index");
-import express = require("express");
+import fs = require('fs');
+import https = require('https');
+import http = require('http');
 
-var app = module.exports = express();
+import express = require('express');
+var logger = require('connect-logger');
+var cookieParser = require('cookie-parser');
+import session = require('express-session');
+var FileStore = require('session-file-store')(session);
+var swig = require('swig');
 
-// Configuration
-app.configure(function () {
-    app.set('port', process.env.PORT || 1337);
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
-    app.use(express.favicon());
-    app.use(express.logger('dev'));
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    
-    
-    if (process.env.SESSIONNAME === 'Console') {
-        // this is to make sure express does not serve static files when in IIS
-        app.use(express.static(__dirname + '/public'));
-    }
-    console.log(__dirname + '/public');
-    app.use(app.router);
-});
+var controllerFactory = require('./controllers/index');
 
-app.configure('development', function () {
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
+// setup express
+var app = express();
+app.use(logger());
+app.use(cookieParser('8d705e4b-c142-420e-955a-a1a58263b6bd')); // Change key on new project
+app.use(session({
+  store: new FileStore(),
+  secret: '13603e53-f0af-41dd-b020-dbf5c9e7768e', // Change key on new project
+  resave: false,
+  saveUninitialized: true
+}));
 
-app.configure('production', function () {
-    app.use(express.errorHandler());
-});
+// configure express to use swig as the view engine
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html);
+// change express default where to look for views on the server
+app.set('views', __dirname + '/views');
 
-// Routes
-app.get('/', routes.index);
+// setup express to have static resource folders
+app.use('/public', express.static(__dirname + '/public'));
 
-app.listen(app.get('port'), function () {
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
+// load UX and API controllers
+var controllers = new controllerFactory(app);
+controllers.init();
+
+// setup ssl self hosting
+var httpServerPort = process.env.PORT || 1337;  // use server value (for Azure) or local port
+
+// create & startup HTTP webserver
+http.createServer(app)
+    .listen(httpServerPort);
+
+console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
+console.log('Web Server listening at http://[local-ip]:%s', httpServerPort);
+console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
