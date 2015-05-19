@@ -16,6 +16,8 @@ var GulpConfig = (function () {
     this.appJSDest           = this.output + 'public/js/app/';
     this.mainJS              = this.output + 'public/js/*.js';
     this.mainJSDest          = this.output + 'public/js/';
+    this.mainCss             = this.output + 'public/css/**/*.css';
+    this.mainCssDest         = this.output + 'public/css/';
 
     this.typings         = './typings/';
     this.libTsDefs       = this.typings + '*/*.d.ts';

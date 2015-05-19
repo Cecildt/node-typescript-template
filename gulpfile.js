@@ -13,6 +13,7 @@ var gulp       = require('gulp'),
     copy       = require('gulp-copy'),
     uglify     = require('gulp-uglify'),
     concat     = require('gulp-concat'),
+    cssmin     = require('gulp-cssmin'),
     Config     = require('./gulpfile.config');
 
 var config = new Config();
@@ -42,7 +43,16 @@ gulp.task('lint-js', function() {
     .pipe(eslint.format());
 });
 
+/**
+ * Combine and minify all custom JavaScript and CSS files.
+ */
 gulp.task('compress', function(){
+  
+  var cssStream = gulp.src([config.mainCss])
+  .pipe(concat('main.min.css'))
+  .pipe(cssmin())
+  .pipe(gulp.dest(config.mainCssDest));
+  
   var appStream = gulp.src([config.appJS])
   .pipe(concat('app.min.js'))
   .pipe(uglify())
@@ -133,7 +143,7 @@ gulp.task('inspector', function () {
  * Watch for changes in TypeScript, linting, updating references & recompiling code.
  */
 gulp.task('watch', function () {
-  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js']);
+  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']);
 });
 
 /**

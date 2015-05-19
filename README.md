@@ -30,10 +30,10 @@ gulp compile-ts
 You can remove all compiled JavaScript and source maps by running the following:
 
 ````
-gulp clean-ts
+gulp clean-build
 ````
 
-When developing you can run the following. This will monitor any changes to TypeScript and handlebars files (used as the MVC view engine in the Node.js application). If any changes are detected it will automatically do the following things:
+When developing you can run the following Gulp tasks.
 
 - **Lint all TypeScript** (gulp task **lint-ts**)
     - This will check all TypeScript to ensure it meets the coding style rules defined in the [tslint.json](tslint.json) file.
@@ -42,9 +42,12 @@ When developing you can run the following. This will monitor any changes to Type
     - The first, **typings/tsd.d.ts**, contains references to all TypeScript type definition files obtained using the tool [tsd.exe](http://definitelytyped.org/tsd). 
     - The other file that's referenced is **typings/server.d.ts**... it references the TypeScript files used within the application. 
     - This saves the developer from adding all these references to each and every file in the project. 
-- **Compile all TypeScript** (gulp task **compile-server-ts**) 
+- **Compile all TypeScript** (gulp task **compile-ts**) 
     - This compiles all the TypeScript to JavaScript.
-
+- **Lint all JavaScript** (gulp task **lint-js**)
+    - This will check all JavaScript to ensure it meets the coding style rules defined in the [.eslintrc](.eslintrc) file.
+- **Compress and minify Client-side JavaScript** (gulp task **compress**)
+    - This will combine all client-side JavaScript and minify the combined file.
 
 ### Original Layout Structure Links:
 --------------------------
