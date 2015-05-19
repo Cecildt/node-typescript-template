@@ -21,11 +21,12 @@ var config = new Config();
 gulp.task('gen-server-tsrefs', function () {
   var target  = gulp.src(config.serverTsDefList);
   var sources = gulp.src([config.allServerTypeScript], {read: false});
+  
   return target.pipe(inject(sources, {
     starttag : '//{',
     endtag   : '//}',
     transform: function (filepath) {
-      return '/// <reference path="../..' + filepath + '" />';
+      return '/// <reference path="..' + filepath + '" />';
     }
   })).pipe(gulp.dest(config.typings));
 });
@@ -118,7 +119,7 @@ gulp.task('inspector', function () {
  * Watch for changes in TypeScript, linting, updating references & recompiling code.
  */
 gulp.task('watch', function () {
-  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts']);
+  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js']);
 });
 
 /**
@@ -132,9 +133,9 @@ gulp.task('watch-nodemon', function () {
     script : 'src/server/server.js',
     ext    : 'hbs js',
     execMap: {
-      "js": "node --debug"
+      'js': 'node --debug'
     },
-    tasks  : ['lint', 'gen-server-tsrefs', 'compile-server-ts']
+    tasks  : ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js']
   }).on('message', function (event) {
     if (event.type === 'start') {
       console.log('>>>>>>>>>>>>> STARTED NODE.JS WEBSERVER <<<<<<<<<<<<<');
@@ -147,4 +148,4 @@ gulp.task('watch-nodemon', function () {
 });
 
 /* default gulp task */
-gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'watch']);
+gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'watch']);
