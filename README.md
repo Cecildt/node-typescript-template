@@ -36,17 +36,37 @@ gulp clean-build
 When developing you can run the following Gulp tasks.
 
 - **Lint all TypeScript** (gulp task **lint-ts**)
+    - Command: 
+      ```` 
+      gulp lint-ts 
+      ````
     - This will check all TypeScript to ensure it meets the coding style rules defined in the [tslint.json](tslint.json) file.
 - **Update TypeScript references** (gulp task **gen-server-tsrefs**)
+    - Command: 
+      ```` 
+      gulp gen-server-tsrefs 
+      ````
     - There are three files referenced at the top of every TypeScript file. 
     - The first, **typings/tsd.d.ts**, contains references to all TypeScript type definition files obtained using the tool [tsd.exe](http://definitelytyped.org/tsd). 
     - The other file that's referenced is **typings/server.d.ts**... it references the TypeScript files used within the application. 
     - This saves the developer from adding all these references to each and every file in the project. 
-- **Compile all TypeScript** (gulp task **compile-ts**) 
+- **Compile all TypeScript** (gulp task **compile-ts**)
+    - Command: 
+      ```` 
+      gulp compile-ts 
+      ````
     - This compiles all the TypeScript to JavaScript.
 - **Lint all JavaScript** (gulp task **lint-js**)
+    - Command: 
+      ```` 
+      gulp lint-js 
+      ````
     - This will check all JavaScript to ensure it meets the coding style rules defined in the [.eslintrc](.eslintrc) file.
 - **Compress and minify Client-side JavaScript** (gulp task **compress**)
+    - Command: 
+      ```` 
+      gulp compress 
+      ````
     - This will combine all client-side JavaScript and minify the combined file.
 
 ### Original Layout Structure Links:
