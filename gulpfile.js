@@ -154,12 +154,12 @@ gulp.task('watch', function () {
 gulp.task('watch-nodemon', function () {
   // start nodemon
   nodemon({
-    script : 'src/server/server.js',
-    ext    : 'hbs js',
+    script : 'build/server.js',
+    ext    : 'html js',
     execMap: {
       'js': 'node --debug'
     },
-    tasks  : ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js']
+    tasks  : ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']
   }).on('message', function (event) {
     if (event.type === 'start') {
       console.log('>>>>>>>>>>>>> STARTED NODE.JS WEBSERVER <<<<<<<<<<<<<');
