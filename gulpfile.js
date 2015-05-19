@@ -9,6 +9,7 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     nodemon    = require('gulp-nodemon'),
     inspector  = require('gulp-node-inspector'),
+    eslint = require('gulp-eslint'),
     Config     = require('./gulpfile.config');
 
 var config = new Config();
@@ -29,18 +30,27 @@ gulp.task('gen-server-tsrefs', function () {
 });
 
 /**
+ * Lint all custom JavaScript files.
+ */
+gulp.task('lint-js', function() {  
+  return gulp.src(config.output)
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
+
+/**
  * Lint all custom TypeScript files.
  */
-gulp.task('lint', function () {
+gulp.task('lint-ts', function () {
   return gulp.src(config.allTypeScript)
       .pipe(tslint())
       .pipe(tslint.report('prose'));
 });
 
 /**
- * Compile TypeScript and include references ttsdo library and server.d.ts files.
+ * Compile TypeScript and include references tsd.d.ts library and server.d.ts files.
  */
-gulp.task('compile-server-ts', function () {
+gulp.task('compile-ts', function () {
   var sourceTsFiles = [config.allServerTypeScript,  // path to typescript files
     config.libTsDefs,                               // typescript definitions
     config.libTsDefList,                            // reference to tsd.d.ts file
@@ -55,10 +65,10 @@ gulp.task('compile-server-ts', function () {
         noExternalResolve: true
       }));
 
-  tsResult.dts.pipe(gulp.dest(config.serverApp));
+  tsResult.dts.pipe(gulp.dest(config.output));
   return tsResult.js
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(config.serverApp));
+      .pipe(gulp.dest(config.output));
 });
 
 /**
@@ -66,8 +76,8 @@ gulp.task('compile-server-ts', function () {
  */
 gulp.task('clean-ts', function () {
   var typeScriptGenFiles = [
-    config.source + '**/*.js',    // path to all JS files auto gen'd by editor
-    config.source + '**/*.js.map' // path to all sourcemap files auto gen'd by editor
+    config.output + '**/*.js',    // path to all JS files auto gen'd by editor
+    config.output + '**/*.js.map' // path to all sourcemap files auto gen'd by editor
   ];
 
   // delete the files
@@ -97,7 +107,7 @@ gulp.task('inspector', function () {
  * Watch for changes in TypeScript, linting, updating references & recompiling code.
  */
 gulp.task('watch', function () {
-  gulp.watch([config.allTypeScript], ['lint', 'gen-server-tsrefs', 'compile-server-ts']);
+  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts']);
 });
 
 /**
@@ -126,4 +136,4 @@ gulp.task('watch-nodemon', function () {
 });
 
 /* default gulp task */
-gulp.task('default', ['lint', 'gen-server-tsrefs', 'compile-server-ts', 'watch']);
+gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'watch']);

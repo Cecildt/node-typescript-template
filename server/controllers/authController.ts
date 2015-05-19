@@ -6,7 +6,6 @@ import User = require('../models/user');
 
 class AuthController {
   constructor(private app:express.Application) {
-    
   }
 
 }

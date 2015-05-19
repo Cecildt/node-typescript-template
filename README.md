@@ -35,7 +35,7 @@ gulp clean-ts
 
 When developing you can run the following. This will monitor any changes to TypeScript and handlebars files (used as the MVC view engine in the Node.js application). If any changes are detected it will automatically do the following things:
 
-- **Lint all TypeScript** (gulp task **lint**)
+- **Lint all TypeScript** (gulp task **lint-ts**)
     - This will check all TypeScript to ensure it meets the coding style rules defined in the [tslint.json](tslint.json) file.
 - **Update TypeScript references** (gulp task **gen-server-tsrefs**)
     - There are three files referenced at the top of every TypeScript file. 

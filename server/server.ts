@@ -27,7 +27,7 @@ app.use(session({
 
 // configure express to use swig as the view engine
 app.engine('html', swig.renderFile);
-app.set('view engine', 'html);
+app.set('view engine', 'html');
 // change express default where to look for views on the server
 app.set('views', __dirname + '/views');
 

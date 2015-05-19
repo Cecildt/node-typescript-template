@@ -10,17 +10,18 @@ interface IUser {
 }
 
 class User {
-  _user:IUser;
+  _user : IUser;
 
-  constructor(private request:express.Request) {
-    
+  constructor(private request : express.Request) {
+    console.log('User created.');
   }
 
-  public setCurrentUser(userId:string, firstName:string, lastName:string) {
-    
-    _user.userId = userId;
-    _user.firstName = firstName;
-    _user.lastName = lastName;
+  public setCurrentUser(userId : string, firstName : string, lastName : string) {
+    this._user = {
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName
+    };
   }
 }
 

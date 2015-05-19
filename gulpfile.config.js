@@ -3,7 +3,8 @@
 var GulpConfig = (function () {
   function GulpConfig() {
     this.source    = './server/';
-    this.serverApp = './build/';
+    this.serverApp = './server/';
+    this.output = './build/';
 
     this.allTypeScript       = this.source + '**/*.ts';
     this.allServerTypeScript = this.serverApp + '**/*.ts';
