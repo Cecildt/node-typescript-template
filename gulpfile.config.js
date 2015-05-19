@@ -10,7 +10,12 @@ var GulpConfig = (function () {
     this.allServerTypeScript = this.source + '**/*.ts';
     this.views               = this.source + '**/*.html';
     this.css                 = this.source + 'public/css/*';
-    this.images                 = this.source + 'public/img/*';
+    this.images              = this.source + 'public/img/*';
+    
+    this.appJS               = this.output + 'public/js/app/*.js';
+    this.appJSDest           = this.output + 'public/js/app/';
+    this.mainJS              = this.output + 'public/js/*.js';
+    this.mainJSDest          = this.output + 'public/js/';
 
     this.typings         = './typings/';
     this.libTsDefs       = this.typings + '*/*.d.ts';

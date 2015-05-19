@@ -11,6 +11,8 @@ var gulp       = require('gulp'),
     inspector  = require('gulp-node-inspector'),
     eslint     = require('gulp-eslint'),
     copy       = require('gulp-copy'),
+    uglify     = require('gulp-uglify'),
+    concat     = require('gulp-concat'),
     Config     = require('./gulpfile.config');
 
 var config = new Config();
@@ -38,6 +40,18 @@ gulp.task('lint-js', function() {
   return gulp.src(config.output)
     .pipe(eslint())
     .pipe(eslint.format());
+});
+
+gulp.task('compress', function(){
+  var appStream = gulp.src([config.appJS])
+  .pipe(concat('app.min.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest(config.appJSDest));
+  
+  return gulp.src([config.mainJS])
+    .pipe(concat('main.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(config.mainJSDest));
 });
 
 /**
@@ -86,7 +100,7 @@ gulp.task('compile-ts', function () {
 /**
  * Remove all generated JavaScript files from TypeScript compilation.
  */
-gulp.task('clean-ts', function () {
+gulp.task('clean-build', function () {
   var typeScriptGenFiles = [
     config.output + '**/*.js',    // path to all JS files auto gen'd by editor
     config.output + '**/*.js.map' // path to all sourcemap files auto gen'd by editor
@@ -148,4 +162,4 @@ gulp.task('watch-nodemon', function () {
 });
 
 /* default gulp task */
-gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'watch']);
+gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']);
