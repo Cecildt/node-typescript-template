@@ -9,7 +9,8 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     nodemon    = require('gulp-nodemon'),
     inspector  = require('gulp-node-inspector'),
-    eslint = require('gulp-eslint'),
+    eslint     = require('gulp-eslint'),
+    copy       = require('gulp-copy'),
     Config     = require('./gulpfile.config');
 
 var config = new Config();
@@ -64,6 +65,16 @@ gulp.task('compile-ts', function () {
         declarationFiles : false,
         noExternalResolve: true
       }));
+
+
+  gulp.src(config.views)
+  .pipe(copy(config.output, {prefix: 1}));
+  
+  gulp.src(config.css)
+  .pipe(copy(config.output, {prefix: 1}));
+  
+  gulp.src(config.images)
+  .pipe(copy(config.output, {prefix: 1}));
 
   tsResult.dts.pipe(gulp.dest(config.output));
   return tsResult.js

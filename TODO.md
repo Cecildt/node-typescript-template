@@ -2,6 +2,6 @@ TODO List
 =========
 
 - Gulp - Add ESLint
-- Gulp - Copy CSS
-- Gulp - Copy Images
+- Gulp - Combine and compress CSS
+- Gulp - Combine and compress Client JS
 - Add Mocha testing
