@@ -6,7 +6,8 @@ var gulp       = require('gulp'),
     tsc        = require('gulp-typescript'),
     tslint     = require('gulp-tslint'),
     sourcemaps = require('gulp-sourcemaps'),
-    clean      = require('gulp-clean'),
+    del        = require('del'),
+    vinylPaths = require('vinyl-paths'),
     nodemon    = require('gulp-nodemon'),
     inspector  = require('gulp-node-inspector'),
     eslint     = require('gulp-eslint'),
@@ -118,7 +119,7 @@ gulp.task('clean-build', function () {
 
   // delete the files
   return gulp.src(typeScriptGenFiles, {read: false})
-      .pipe(clean());
+      .pipe(vinylPaths(del));
 });
 
 /**
