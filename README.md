@@ -69,6 +69,13 @@ When developing you can run the following Gulp tasks.
       ````
     - This will combine all client-side JavaScript and minify the combined file.
 
+### Run the Node Server
+```
+    node build/server.js
+```
+
+The web application should be accessible at http://localhost:1337
+
 ### Original Layout Structure Links:
 --------------------------
 - https://github.com/andrewconnell/pres-o365-node.git
