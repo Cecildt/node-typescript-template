@@ -9,7 +9,6 @@ var gulp       = require('gulp'),
     del        = require('del'),
     vinylPaths = require('vinyl-paths'),
     nodemon    = require('gulp-nodemon'),
-    inspector  = require('gulp-node-inspector'),
     eslint     = require('gulp-eslint'),
     copy       = require('gulp-copy'),
     uglify     = require('gulp-uglify'),
@@ -120,24 +119,6 @@ gulp.task('clean-build', function () {
   // delete the files
   return gulp.src(typeScriptGenFiles, {read: false})
       .pipe(vinylPaths(del));
-});
-
-/**
- * Setup node inspector to debug app.
- */
-gulp.task('inspector', function () {
-  // start node inspector
-  gulp.src([])
-      .pipe(inspector({
-        debugPort      : 5858,
-        webHost        : '127.0.0.1',
-        webPort        : 8080,
-        saveLiveEdit   : false,
-        preload        : true,
-        inject         : true,
-        hidden         : [],
-        stackTraceLimit: 50
-      }));
 });
 
 /**
