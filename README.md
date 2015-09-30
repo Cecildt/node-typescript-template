@@ -3,6 +3,8 @@ Node Typescript Express Template
 
 Project template for using NodeJS with the Express Framework and TypeScript code to create a web application.
 
+[![bitHound Score](https://www.bithound.io/github/Cecildt/node-typescript-template/badges/score.svg)](https://www.bithound.io/github/Cecildt/node-typescript-template)
+[![bitHound Dependencies](https://www.bithound.io/github/Cecildt/node-typescript-template/badges/dependencies.svg)](https://www.bithound.io/github/Cecildt/node-typescript-template/master/dependencies/npm)
 
 Developer Application Requirements
 ----------------------------------
