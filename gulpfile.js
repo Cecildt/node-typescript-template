@@ -63,7 +63,7 @@ gulp.task('lint-ts', function () {
 gulp.task('compile-ts', function () {
   var tsProject = tsc.createProject('tsconfig.json');
   
-  var tsResult = tsProject.src().pipe(tsc(tsProject));
+  var tsResult = gulp.src([config.libTsDefList, config.allTypeScript]).pipe(tsc(tsProject));
   tsResult.js.pipe(gulp.dest('build'));
   
   gulp.src(config.views)

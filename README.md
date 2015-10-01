@@ -64,7 +64,7 @@ When developing you can run the following Gulp tasks.
 
 ### Run the Node Server
 ```
-    node build/server/server.js
+    node build/server.js
 ```
 
 The web application should be accessible at http://localhost:1337
