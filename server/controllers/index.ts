@@ -1,6 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
-/// <reference path="../../typings/server.d.ts" />
-
 import express = require('express');
 import HomeController = require('./homeController');
 import AuthController = require('./authController');

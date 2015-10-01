@@ -8,7 +8,9 @@
   },
   "scripts": {
     "init": "npm install",
-    "install": "tsd reinstall --save"
+    "preinstall": "npm install -g bower express typescript tsd nodemon gulp",
+    "install": "tsd reinstall --save",
+    "postinstall": "gulp compile-ts"
   },
   "author": {
     "name": "Cecil du Toit",
@@ -31,6 +33,7 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "del": "^2.0.2",
+    "vinyl": "^1.0.0",
     "vinyl-paths": "^2.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "^0.0.2",

@@ -11,7 +11,7 @@ Developer Application Requirements
 Install these globally using the following command:
 
 ````
-npm install -g bower express typescript tsd nodemon gulp node-inspector
+npm install -g bower express typescript tsd nodemon gulp
 ````
 
 ### Compile Everything
@@ -43,15 +43,6 @@ When developing you can run the following Gulp tasks.
       gulp lint-ts 
       ````
     - This will check all TypeScript to ensure it meets the coding style rules defined in the [tslint.json](tslint.json) file.
-- **Update TypeScript references** (gulp task **gen-server-tsrefs**)
-    - Command: 
-      ```` 
-      gulp gen-server-tsrefs 
-      ````
-    - There are three files referenced at the top of every TypeScript file. 
-    - The first, **typings/tsd.d.ts**, contains references to all TypeScript type definition files obtained using the tool [tsd.exe](http://definitelytyped.org/tsd). 
-    - The other file that's referenced is **typings/server.d.ts**... it references the TypeScript files used within the application. 
-    - This saves the developer from adding all these references to each and every file in the project. 
 - **Compile all TypeScript** (gulp task **compile-ts**)
     - Command: 
       ```` 
@@ -73,7 +64,7 @@ When developing you can run the following Gulp tasks.
 
 ### Run the Node Server
 ```
-    node build/server.js
+    node build/server/server.js
 ```
 
 The web application should be accessible at http://localhost:1337

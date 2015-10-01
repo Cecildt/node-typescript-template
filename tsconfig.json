@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+		"target": "ES5",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+		"outDir": "build"
+    },
+    "files": [        
+        "typings/tsd.d.ts",
+        "server/server.ts",
+        "server/controllers/index.ts"
+    ]
+}

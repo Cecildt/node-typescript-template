@@ -1,6 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
-/// <reference path="../typings/server.d.ts" />
-
 import fs = require('fs');
 import https = require('https');
 import http = require('http');
@@ -12,7 +9,7 @@ import session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var swig = require('swig');
 
-var controllerFactory = require('./controllers/index');
+import controllerFactory = require('./controllers/index');
 
 // setup express
 var app = express();

@@ -19,22 +19,6 @@ var gulp       = require('gulp'),
 var config = new Config();
 
 /**
- * Generates the server.d.ts references file dynamically from all application *.ts files.
- */
-gulp.task('gen-server-tsrefs', function () {
-  var target  = gulp.src(config.serverTsDefList);
-  var sources = gulp.src([config.allServerTypeScript], {read: false});
-  
-  return target.pipe(inject(sources, {
-    starttag : '//{',
-    endtag   : '//}',
-    transform: function (filepath) {
-      return '/// <reference path="..' + filepath + '" />';
-    }
-  })).pipe(gulp.dest(config.typings));
-});
-
-/**
  * Lint all custom JavaScript files.
  */
 gulp.task('lint-js', function() {  
@@ -77,21 +61,11 @@ gulp.task('lint-ts', function () {
  * Compile TypeScript and include references tsd.d.ts library and server.d.ts files.
  */
 gulp.task('compile-ts', function () {
-  var sourceTsFiles = [config.allServerTypeScript,  // path to typescript files
-    config.libTsDefs,                               // typescript definitions
-    config.libTsDefList,                            // reference to tsd.d.ts file
-    config.serverTsDefList];                        // reference to server.d.ts file
-
-  var tsResult = gulp.src(sourceTsFiles)
-      .pipe(sourcemaps.init())
-      .pipe(tsc({
-        target           : 'ES5',
-        module           : 'commonjs',
-        declarationFiles : false,
-        noExternalResolve: true
-      }));
-
-
+  var tsProject = tsc.createProject('tsconfig.json');
+  
+  var tsResult = tsProject.src().pipe(tsc(tsProject));
+  tsResult.js.pipe(gulp.dest('build'));
+  
   gulp.src(config.views)
   .pipe(copy(config.output, {prefix: 1}));
   
@@ -101,10 +75,6 @@ gulp.task('compile-ts', function () {
   gulp.src(config.images)
   .pipe(copy(config.output, {prefix: 1}));
 
-  tsResult.dts.pipe(gulp.dest(config.output));
-  return tsResult.js
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(config.output));
 });
 
 /**
@@ -125,7 +95,7 @@ gulp.task('clean-build', function () {
  * Watch for changes in TypeScript, linting, updating references & recompiling code.
  */
 gulp.task('watch', function () {
-  gulp.watch([config.allTypeScript], ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']);
+  gulp.watch([config.allTypeScript], ['lint-ts',  'compile-ts', 'lint-js', 'compress']);
 });
 
 /**
@@ -136,12 +106,12 @@ gulp.task('watch', function () {
 gulp.task('watch-nodemon', function () {
   // start nodemon
   nodemon({
-    script : 'build/server.js',
+    script : 'build/server/server.js',
     ext    : 'html js',
     execMap: {
       'js': 'node --debug'
     },
-    tasks  : ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']
+    tasks  : ['lint-ts', 'compile-ts', 'lint-js', 'compress']
   }).on('message', function (event) {
     if (event.type === 'start') {
       console.log('>>>>>>>>>>>>> STARTED NODE.JS WEBSERVER <<<<<<<<<<<<<');
@@ -154,4 +124,4 @@ gulp.task('watch-nodemon', function () {
 });
 
 /* default gulp task */
-gulp.task('default', ['lint-ts', 'gen-server-tsrefs', 'compile-ts', 'lint-js', 'compress']);
+gulp.task('default', ['lint-ts', 'compile-ts', 'lint-js', 'compress']);

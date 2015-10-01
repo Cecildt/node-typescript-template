@@ -1,10 +1,10 @@
-'use strict';
-
 var GulpConfig = (function () {
+  'use strict';
+  
   function GulpConfig() {
     this.source    = './server/';
     this.serverApp = './server/';
-    this.output = './build/';
+    this.output = './build/server/';
 
     this.allTypeScript       = this.source + '**/*.ts';
     this.allServerTypeScript = this.source + '**/*.ts';
@@ -21,9 +21,7 @@ var GulpConfig = (function () {
 
     this.typings         = './typings/';
     this.libTsDefs       = this.typings + '*/*.d.ts';
-    this.libTsDefList    = this.typings + 'tsd.d.ts';
-    this.serverTsDefList = this.typings + 'server.d.ts';
-    
+    this.libTsDefList    = this.typings + 'tsd.d.ts';    
   }
 
   return GulpConfig;
